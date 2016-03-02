@@ -43,8 +43,8 @@ public class MP {
  * [剑网三](http://jx3.xoyo.com/)
 ![剑网三](http://tupian.enterdesk.com/2013/lxy/12/3/1/6.jpg)
 
- * [古剑奇谭]（http://gjqt.gamebar.com/gj2/）
+ * [古剑奇谭](http://gjqt.gamebar.com/）
 ![古剑奇谭] (http://img1.gamersky.com/image2013/10/20131008lx_2/image001_S.jpg)
 
- * [仙剑奇侠传] （http://pal5.baiyou100.com/pal/index.html）
+ * [仙剑奇侠传](http://pal5.baiyou100.com/pal/index.html)
 ![仙剑奇侠传] (http://imgsrc.baidu.com/forum/pic/item/c38c6c81800a19d80d395c8233fa828ba61e4636.jpg)
