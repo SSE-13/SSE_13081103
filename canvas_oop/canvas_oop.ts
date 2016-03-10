@@ -46,9 +46,9 @@ class Bitmap extends DisplayObject {
 
 class Rect extends DisplayObject {
 
-    width = 100
+    width = 700;
 
-    height = 100;
+    height = 407;
 
     color = '#FF0000';
 
@@ -104,8 +104,8 @@ var context = canvas.getContext("2d");
 
 
 var rect = new Rect();
-rect.width = 200;
-rect.height = 100;
+rect.width = 700;
+rect.height = 407;
 rect.color = '#00FF00'
 
 
@@ -126,7 +126,7 @@ bitmap.source = 'JiHuang.jpg';
 //渲染队列
 var renderQueue = [rect, rect2, text,bitmap];
 //资源加载列表
-var imageList = ['JiHuang.jpg'];
+var imageList = ['JiHuang.jpg',"Man.png"];
 
 //先加载资源，加载成功之后执行渲染队列
 loadResource(imageList, function() {
