@@ -45,8 +45,8 @@ var Rect = (function (_super) {
     __extends(Rect, _super);
     function Rect() {
         _super.apply(this, arguments);
-        this.width = 100;
-        this.height = 100;
+        this.width = 700;
+        this.height = 407;
         this.color = '#FF0000';
     }
     Rect.prototype.render = function (context) {
@@ -96,8 +96,8 @@ function loadResource(imageList, callback) {
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
 var rect = new Rect();
-rect.width = 200;
-rect.height = 100;
+rect.width = 700;
+rect.height = 407;
 rect.color = '#00FF00';
 var rect2 = new Rect();
 rect2.width = 300;
@@ -113,7 +113,7 @@ bitmap.source = 'JiHuang.jpg';
 //渲染队列
 var renderQueue = [rect, rect2, text, bitmap];
 //资源加载列表
-var imageList = ['JiHuang.jpg'];
+var imageList = ['JiHuang.jpg', "Man.png"];
 //先加载资源，加载成功之后执行渲染队列
 loadResource(imageList, function () {
     drawQueue(renderQueue);
