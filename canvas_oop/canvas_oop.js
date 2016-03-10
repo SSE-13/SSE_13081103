@@ -27,11 +27,13 @@ var Bitmap = (function (_super) {
     __extends(Bitmap, _super);
     function Bitmap() {
         _super.apply(this, arguments);
+        this.x = 0;
+        this.y = 0;
     }
     Bitmap.prototype.render = function (context) {
         var image = imagePool[this.source];
         if (image) {
-            context.drawImage(image, 0, 0);
+            context.drawImage(image, 0, 0, this.width, this.height);
         }
         else {
             context.font = "20px Arial";
@@ -45,8 +47,10 @@ var Rect = (function (_super) {
     __extends(Rect, _super);
     function Rect() {
         _super.apply(this, arguments);
-        this.width = 700;
-        this.height = 407;
+        this.width = 100;
+        this.height = 40;
+        this.x = 0;
+        this.y = 0;
         this.color = '#FF0000';
     }
     Rect.prototype.render = function (context) {
@@ -62,8 +66,8 @@ var TextField = (function (_super) {
     }
     TextField.prototype.render = function (context) {
         context.font = "20px Arial";
-        context.fillStyle = '#000000';
-        context.fillText('HelloWorld', 0, 20);
+        context.fillStyle = '#FFFFFF';
+        context.fillText('Play', 0, 20);
     };
     return TextField;
 }(DisplayObject));
@@ -96,9 +100,11 @@ function loadResource(imageList, callback) {
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
 var rect = new Rect();
-rect.width = 700;
-rect.height = 407;
-rect.color = '#00FF00';
+rect.width = 100;
+rect.height = 40;
+rect.x = 300;
+rect.y = 300;
+rect.color = '#681616';
 var rect2 = new Rect();
 rect2.width = 300;
 rect2.height = 50;
@@ -107,11 +113,20 @@ rect2.y = 200;
 rect2.rotation = Math.PI / 8;
 rect2.color = '#00FFFF';
 var text = new TextField();
-text.x = 10;
+text.x = 330;
+text.y = 305;
 var bitmap = new Bitmap();
+bitmap.width = 700;
+bitmap.height = 407;
 bitmap.source = 'JiHuang.jpg';
+var bitmap2 = new Bitmap();
+bitmap2.x = 50;
+bitmap2.y = 200;
+bitmap2.width = 120;
+bitmap2.height = 186;
+bitmap2.source = "Man.png";
 //渲染队列
-var renderQueue = [rect, rect2, text, bitmap];
+var renderQueue = [bitmap, bitmap2, rect, text];
 //资源加载列表
 var imageList = ['JiHuang.jpg', "Man.png"];
 //先加载资源，加载成功之后执行渲染队列
