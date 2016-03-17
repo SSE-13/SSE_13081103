@@ -2,10 +2,12 @@
  * 重力加速度
  */
 var GRAVITY = 9.8;
+var BOUNDS_TOP = 0;
 var BOUNDS_BOTTOM = 400;
 var BOUNDS_LEFT = 0;
 var BOUNDS_RIGHT = 400;
 var BOUNCE = 0.95;
+var f = 0;
 /**
  * 计时器系统
  */
@@ -44,12 +46,29 @@ var Body = (function () {
         this.displayObject = displayObject;
     }
     Body.prototype.onTicker = function (duringTime) {
-        this.vy += duringTime * GRAVITY;
+        if (this.vy > -1 && this.vy < 1 && this.height + this.y > BOUNDS_BOTTOM) {
+            this.vy = 0;
+            this.vx -= this.vx * 0.1;
+            if (this.vx < 0.1) {
+                this.vx = 0;
+            }
+        }
+        else
+            this.vy += duringTime * GRAVITY;
         this.x += duringTime * this.vx;
         this.y += duringTime * this.vy;
         //反弹
-        if (this.y + this.height > BOUNDS_BOTTOM) {
+        if (this.y + this.height > BOUNDS_BOTTOM && this.vy > 0) {
             this.vy = -BOUNCE * this.vy;
+        }
+        if (this.y < BOUNDS_TOP) {
+            this.vy = -BOUNCE * this.vy;
+        }
+        if (this.x + this.width > BOUNDS_RIGHT && this.vx > 0) {
+            this.vx = this.vx * -BOUNCE;
+        }
+        if (this.x <= BOUNDS_LEFT) {
+            this.vx = this.vx * -BOUNCE;
         }
         //TODO： 左右越界反弹
         //根据物体位置更新显示对象属性
@@ -62,14 +81,14 @@ var Body = (function () {
 var rect = new Rect();
 rect.width = 150;
 rect.height = 100;
-rect.color = '#FF0000';
+rect.color = '#FFFFFF';
 /**
  * 创建一个物体，其显示内容为一个长方形，受重力做平抛运动
  */
 var body = new Body(rect);
 body.width = rect.width;
 body.height = rect.height;
-body.vx = 5; //需要保证 vx 在 0-50的范围内行为正常
+body.vx = 100; //需要保证 vx 在 0-50的范围内行为正常
 body.vy = 0; //需要保证 vy 在 0-50的范围内行为正常
 var renderCore = new RenderCore();
 var ticker = new Ticker();
