@@ -23,14 +23,21 @@ var game;
             grid.setWalkable(5, 5, false);
         }
         WorldMap.prototype.render = function (context) {
-            context.fillStyle = '#0000FF';
+            // context.fillStyle = '#0000FF';
             context.strokeStyle = '#FF0000';
             context.beginPath();
             for (var i = 0; i < NUM_COLS; i++) {
                 for (var j = 0; j < NUM_ROWS; j++) {
-                    context.rect(i * GRID_PIXEL_WIDTH, j * GRID_PIXEL_HEIGHT, GRID_PIXEL_WIDTH, GRID_PIXEL_HEIGHT);
-                    context.fill();
-                    context.stroke();
+                    if (this.grid.getNode(i, j).walkable == false) {
+                        context.fillStyle = "#000000";
+                        context.fillRect(i * GRID_PIXEL_WIDTH, j * GRID_PIXEL_HEIGHT, GRID_PIXEL_WIDTH, GRID_PIXEL_HEIGHT);
+                    }
+                    else {
+                        context.fillStyle = "#0000FF";
+                        context.rect(i * GRID_PIXEL_WIDTH, j * GRID_PIXEL_HEIGHT, GRID_PIXEL_WIDTH, GRID_PIXEL_HEIGHT);
+                        context.fill();
+                        context.stroke();
+                    }
                 }
             }
             context.closePath();
@@ -57,18 +64,45 @@ var game;
         __extends(BoyBody, _super);
         function BoyBody() {
             _super.apply(this, arguments);
+            this.n = 1;
+            this.dx = new Array;
+            this.dy = new Array;
+            // da = new Array;
+            //db = new Array;
+            this.h = GRID_PIXEL_HEIGHT;
+            this.w = GRID_PIXEL_WIDTH;
         }
         BoyBody.prototype.run = function (grid) {
             grid.setStartNode(0, 0);
+            this.x = grid.startNode.x * this.w;
+            this.y = grid.startNode.y * this.h;
             grid.setEndNode(10, 8);
             var findpath = new astar.AStar();
             findpath.setHeurisitic(findpath.diagonal);
             var result = findpath.findPath(grid);
-            var path = findpath._path;
-            console.log(path);
+            // var path = findpath._path;
+            this.path = findpath._path;
+            for (var i = 0; i < this.path.length; i++) {
+                this.dx[i] = this.path[i].x - this.path[i - 1].x;
+                this.dy[i] = this.path[i].y - this.path[i - 1].y;
+            }
+            console.log(this.path);
             console.log(grid.toString());
         };
         BoyBody.prototype.onTicker = function (duringTime) {
+            /*if (this.n < this.path.length-1) {
+              //  var x0 = this.path[this.n].x * this.w;
+               // var y0 = this.path[this.n].y * this.h;
+                
+                this.x += this.dx[this.n] * this.w;
+                this.y += this.dy[this.n] * this.h;
+                this.n++;
+                
+                
+               
+           
+            }*/
+            // console.log(this.x,this.y,this.n);
         };
         return BoyBody;
     }(Body));
@@ -82,3 +116,4 @@ var renderCore = new RenderCore();
 renderCore.start([world, boyShape]);
 var ticker = new Ticker();
 ticker.start([body]);
+ticker.onTicker();
