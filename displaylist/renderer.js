@@ -32,7 +32,7 @@ var render;
             else {
                 //TODO:
                 // GLOBAL_MATRIX = PARENT_GLOBAL_MATRIX * LOCAL_MATRIX
-                this.globalMatrix = localMatrix;
+                this.globalMatrix = matrixjisuan(localMatrix, parent.globalMatrix);
             }
             context.setTransform(this.globalMatrix.a, this.globalMatrix.b, this.globalMatrix.c, this.globalMatrix.d, this.globalMatrix.tx, this.globalMatrix.ty);
             this.render(context);
@@ -42,6 +42,16 @@ var render;
         return DisplayObject;
     }());
     render.DisplayObject = DisplayObject;
+    function matrixjisuan(M_a, M_b) {
+        var M_ab = new render.Matrix();
+        M_ab.a = M_a.a * M_b.a + M_a.b * M_b.c;
+        M_ab.b = M_a.a * M_b.b + M_a.b * M_b.d;
+        M_ab.c = M_a.d * M_b.c + M_a.c * M_b.a;
+        M_ab.d = M_a.c * M_b.b + M_a.d * M_b.d;
+        M_ab.tx = M_a.tx * M_b.a + M_a.ty * M_b.c + M_b.tx;
+        M_ab.ty = M_a.ty * M_b.d + M_a.tx * M_b.b + M_b.ty;
+        return M_ab;
+    }
     var DisplayObjectContainer = (function (_super) {
         __extends(DisplayObjectContainer, _super);
         function DisplayObjectContainer() {
