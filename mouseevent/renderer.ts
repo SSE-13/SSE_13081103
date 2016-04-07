@@ -46,7 +46,7 @@ module render {
             else {
                 //TODO:
                 // GLOBAL_MATRIX = PARENT_GLOBAL_MATRIX * LOCAL_MATRIX
-                this.globalMatrix = math.matrixAppendMatrix(localMatrix, parent.globalMatrix);
+               this.globalMatrix = matrixjisuan(localMatrix,parent.globalMatrix);
             }
 
 
@@ -65,6 +65,23 @@ module render {
 
         }
     }
+    
+     function matrixjisuan(M_a : math.Matrix , M_b : math.Matrix) : math.Matrix {
+         var M_ab = new math.Matrix();
+         
+         M_ab.a = M_a.a * M_b.a + M_a.b * M_b.c ;
+         M_ab.b = M_a.a * M_b.b + M_a.b * M_b.d ; 
+         M_ab.c = M_a.d * M_b.c + M_a.c * M_b.a ; 
+         M_ab.d = M_a.c * M_b.b + M_a.d * M_b.d ; 
+         M_ab.tx = M_a.tx * M_b.a + M_a.ty * M_b.c + M_b.tx ; 
+         M_ab.ty = M_a.ty * M_b.d + M_a.tx * M_b.b + M_b.ty ; 
+         
+         return M_ab;
+         
+
+        
+    }
+
 
     // Container
     //   draw
